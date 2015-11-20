@@ -4,12 +4,10 @@ import java.util.Iterator;
 import java.util.Collections;
 import java.util.Comparator;
 
-
 public class Sort extends Operator{
-	
 	private ArrayList<Attribute> newAttributeList;
 	private String orderPredicate;
-	ArrayList<Tuple> tuplesResult;
+	private ArrayList<Tuple> tuplesResult;
 	private Iterator<Tuple> tuplesResultIterator;
 	private	int orderAttIndex = -1;
 	
@@ -23,6 +21,7 @@ public class Sort extends Operator{
 		getOrderAttIndex();
 		sortTuples();
 	}
+
 	private void getChildTuples(){
 		Tuple tuple;
 		while((tuple = child.next())!=null){
@@ -30,6 +29,7 @@ public class Sort extends Operator{
 		}
 		this.tuplesResultIterator = tuplesResult.iterator();
 	}
+
 	private void getOrderAttIndex(){
 		ArrayList<Attribute> attributes = tuplesResult.get(0).getAttributeList();
 		for(int i = 0; i<attributes.size(); i++){
@@ -39,15 +39,9 @@ public class Sort extends Operator{
 			}
 		}
 	}
+
 	private void sortTuples(){
 		tuplesResult.sort((Tuple tupleX, Tuple tupleY) -> String.valueOf(tupleX.getAttributeValue(orderAttIndex)).compareTo(String.valueOf(tupleY.getAttributeValue(orderAttIndex))));
-		/*Collections.sort(tuplesResult, new Comparator<Tuple>() {
-			@Override
-			public int compare(Tuple tupleX, Tuple tupleY)
-			{
-				return String.valueOf(tupleX.getAttributeValue(orderAttIndex)).compareTo(String.valueOf(tupleY.getAttributeValue(orderAttIndex)));
-			}
-		});*/
 		this.tuplesResultIterator = tuplesResult.iterator();
 	}
 	
@@ -70,5 +64,4 @@ public class Sort extends Operator{
 	public ArrayList<Attribute> getAttributeList(){
 		return child.getAttributeList();
 	}
-
 }

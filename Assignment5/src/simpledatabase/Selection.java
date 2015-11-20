@@ -2,13 +2,11 @@ package simpledatabase;
 import java.util.ArrayList;
 
 public class Selection extends Operator{
-	
 	ArrayList<Attribute> attributeList;
 	String whereTablePredicate;
 	String whereAttributePredicate;
 	String whereValuePredicate;
 	private Boolean select = null;
-
 	
 	public Selection(Operator child, String whereTablePredicate, String whereAttributePredicate, String whereValuePredicate) {
 		this.child = child;
@@ -41,8 +39,7 @@ public class Selection extends Operator{
 			}
 			tuple = child.next();
 		}
-		return tuple;
-			
+		return tuple;	
 	}
 	
 	/**
@@ -50,9 +47,6 @@ public class Selection extends Operator{
      * @return the attribute list
      */
 	public ArrayList<Attribute> getAttributeList(){
-		
 		return(child.getAttributeList());
 	}
-
-	
 }

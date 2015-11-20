@@ -3,7 +3,6 @@ import java.util.ArrayList;
 import java.util.Iterator;
 
 public class Join extends Operator{
-
 	private ArrayList<Attribute> newAttributeList;
 	private String joinPredicate;
 	private ArrayList<Tuple> tuples1;
@@ -14,7 +13,6 @@ public class Join extends Operator{
 	private int leftJoinIndex = -1, rightJoinIndex = -1;
 	private ArrayList<String> skipNames = new ArrayList<String>();
 	
-	//Join Constructor, join fill
 	public Join(Operator leftChild, Operator rightChild, String joinPredicate){
 		this.leftChild = leftChild;
 		this.rightChild = rightChild;
@@ -26,6 +24,7 @@ public class Join extends Operator{
 		init();
 		
 	}
+
 	private void getLeftTuples(){
 		Tuple tuple;
 		while((tuple = leftChild.next())!=null){
@@ -33,6 +32,7 @@ public class Join extends Operator{
 		}
 		this.leftTupleIterator = leftChildTuples.iterator();
 	}
+
 	private void init(){
 		ArrayList<Attribute> leftAttributes = leftChildTuples.get(0).getAttributeList();
 		ArrayList<Attribute> rightAttributes = rightTuple.getAttributeList();
@@ -65,14 +65,10 @@ public class Join extends Operator{
 	public Tuple next(){
 		if(rightTuple != null){
 			ArrayList<Attribute> rightAttributeList = rightTuple.getAttributeList();
-			//leftTupleIterator = leftChildTuples.iterator();
 			while(true){
 				while(leftTupleIterator.hasNext()){
 					Tuple leftTuple = leftTupleIterator.next();
-					//System.out.println("[Join] ");
-					//TestPrint.printFullTuple(leftTuple);
 					ArrayList<Attribute> leftAttributeList = leftTuple.getAttributeList();
-					//System.out.println("[Join] leftValue: "+leftAttributeList.get(leftJoinIndex).getAttributeValue()+",rightValue: "+rightAttributeList.get(rightJoinIndex).getAttributeValue()+"\n");
 					if (leftAttributeList.get(leftJoinIndex).getAttributeValue().equals(rightAttributeList.get(rightJoinIndex).getAttributeValue())){
 						mergeRecord(leftAttributeList, rightAttributeList);
 						rightTuple = rightChild.next();
@@ -80,14 +76,11 @@ public class Join extends Operator{
 					}
 				}
 				leftTupleIterator = leftChildTuples.iterator();
-				//System.out.println("\nLoop leftTuples again...\n");
 			}
-			
-
 		}
-		
 		return null;
 	}
+	
 	private void mergeRecord(ArrayList<Attribute> leftAttributeList, ArrayList<Attribute> rightAttributeList){
 		newAttributeList = rightAttributeList;
 		for(Attribute attribute : leftAttributeList){

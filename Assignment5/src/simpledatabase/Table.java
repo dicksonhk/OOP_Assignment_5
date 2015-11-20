@@ -12,7 +12,6 @@ public class Table extends Operator{
 
 	public Table(String from){
 		this.from = from;
-		
 		//Create buffer reader
 		try{
 			br = new BufferedReader(new InputStreamReader(getClass().getResourceAsStream("/datafile/"+from+".csv")));
@@ -23,7 +22,6 @@ public class Table extends Operator{
 			e.printStackTrace();
 			return;
 		}
-		
 	}
 
 	

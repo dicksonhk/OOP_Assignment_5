@@ -2,7 +2,6 @@ package simpledatabase;
 import java.util.ArrayList;
 
 public class Projection extends Operator{
-	
 	ArrayList<Attribute> newAttributeList;
 	private String attributePredicate;
 	private String[] predicates;
