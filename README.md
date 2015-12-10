@@ -4,7 +4,7 @@ This is my github repo for the COMP2021 Assignment 5, version 2
 To compile and test my project you should run the following commands:
 ```sh
 $ git clone https://github.com/dicksonhk/OOP_Assignment_5.git
-$ cd OOP_Assignment5/
+$ cd OOP_Assignment_5/
 $ cd Assignment5/
 $ ant compile
 $ ant test
