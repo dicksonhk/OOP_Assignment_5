@@ -10,16 +10,23 @@ public class Sort extends Operator{
 	private ArrayList<Tuple> tuplesResult;
 	private Iterator<Tuple> tuplesResultIterator;
 	private	int orderAttIndex = -1;
+	private Boolean inited = false;
 	
 	public Sort(Operator child, String orderPredicate){
 		this.child = child;
 		this.orderPredicate = orderPredicate;
 		newAttributeList = new ArrayList<Attribute>();
 		tuplesResult = new ArrayList<Tuple>();
+
+	}
+
+	private void init(){
 		tuplesResultIterator = tuplesResult.iterator();
 		getChildTuples();
 		getOrderAttIndex();
 		sortTuples();
+		inited = true;
+		return;
 	}
 
 	private void getChildTuples(){
@@ -51,6 +58,7 @@ public class Sort extends Operator{
 	 */
 	@Override
 	public Tuple next(){
+		if(!inited) init();
 		if(tuplesResultIterator.hasNext()){
 			return tuplesResultIterator.next();
 		}

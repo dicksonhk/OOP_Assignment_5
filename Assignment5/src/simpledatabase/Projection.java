@@ -5,14 +5,20 @@ public class Projection extends Operator{
 	ArrayList<Attribute> newAttributeList;
 	private String attributePredicate;
 	private String[] predicates;
+	private Boolean inited = false;
 
 	public Projection(Operator child, String attributePredicate){
 		this.attributePredicate = attributePredicate;
 		this.child = child;
 		newAttributeList = new ArrayList<Attribute>();
-		predicates = attributePredicate.split(",");
+
 	}
 	
+	private void init(){
+		predicates = attributePredicate.split(",");
+		inited = true;
+		return;
+	}
 	
 	/**
      * Return the data of the selected attribute as tuple format
@@ -20,6 +26,7 @@ public class Projection extends Operator{
      */
 	@Override
 	public Tuple next(){
+		if(!inited) init();
 		ArrayList<Attribute> newAttributeList = new ArrayList<Attribute>();
 		Tuple tuple = child.next();			
 		if(tuple!=null){

@@ -12,6 +12,7 @@ public class Join extends Operator{
 	private String joinName = null;
 	private int leftJoinIndex = -1, rightJoinIndex = -1;
 	private ArrayList<String> skipNames = new ArrayList<String>();
+	private Boolean inited = false;
 	
 	public Join(Operator leftChild, Operator rightChild, String joinPredicate){
 		this.leftChild = leftChild;
@@ -19,9 +20,6 @@ public class Join extends Operator{
 		this.joinPredicate = joinPredicate;
 		newAttributeList = new ArrayList<Attribute>();
 		tuples1 = new ArrayList<Tuple>();
-		getLeftTuples(); //get leftChild tuples
-		rightTuple = rightChild.next();
-		init();
 		
 	}
 
@@ -34,6 +32,8 @@ public class Join extends Operator{
 	}
 
 	private void init(){
+		getLeftTuples(); //get leftChild tuples
+		rightTuple = rightChild.next();
 		ArrayList<Attribute> leftAttributes = leftChildTuples.get(0).getAttributeList();
 		ArrayList<Attribute> rightAttributes = rightTuple.getAttributeList();
 		for(int i = 0; i < rightAttributes.size(); i++){
@@ -53,6 +53,7 @@ public class Join extends Operator{
 				}
 			}
 		}
+		inited = true;
 		return;
 	}
 
@@ -63,6 +64,7 @@ public class Join extends Operator{
 	//The record after join with two tables
 	@Override
 	public Tuple next(){
+		if(!inited) init();
 		if(rightTuple != null){
 			ArrayList<Attribute> rightAttributeList = rightTuple.getAttributeList();
 			while(true){

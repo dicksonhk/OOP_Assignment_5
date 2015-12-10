@@ -7,6 +7,7 @@ public class Selection extends Operator{
 	String whereAttributePredicate;
 	String whereValuePredicate;
 	private Boolean select = null;
+	private Boolean inited = false;
 	
 	public Selection(Operator child, String whereTablePredicate, String whereAttributePredicate, String whereValuePredicate) {
 		this.child = child;
@@ -14,13 +15,18 @@ public class Selection extends Operator{
 		this.whereAttributePredicate = whereAttributePredicate;
 		this.whereValuePredicate = whereValuePredicate;
 		attributeList = new ArrayList<Attribute>();
+
+	}
+	
+	private void init(){
 		try{
 			select = (((Table)child).from().equals(whereTablePredicate));
 		}catch (Exception e){
 			select = false;
 		}
+		inited = true;
+		return;
 	}
-	
 	
 	/**
      * Get the tuple which match to the where condition
@@ -28,6 +34,7 @@ public class Selection extends Operator{
      */
 	@Override
 	public Tuple next(){
+		if(!inited) init();
 		Tuple tuple = child.next();
 		while(tuple!=null && select){
 			ArrayList<Attribute> attributes= tuple.getAttributeList();

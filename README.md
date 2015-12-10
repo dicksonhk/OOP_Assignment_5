@@ -1,5 +1,5 @@
-# OOP_Assignment5
-This is my github repo for the COMP2021 Assignment 5
+# OOP_Assignment5, Version 2
+This is my github repo for the COMP2021 Assignment 5, version 2
 
 To compile and test my project you should run the following commands:
 ```sh

@@ -6,17 +6,16 @@ import java.io.InputStreamReader;
 
 public class Table extends Operator{
 	private BufferedReader br = null;
-	private boolean getAttribute=false;
-	private Tuple tuple=null;
+	private boolean getAttribute = false;
+	private Tuple tuple = null;
 	private String attributeLine, dataTypeLine;
+	private Boolean inited = false;
 
 	public Table(String from){
 		this.from = from;
 		//Create buffer reader
 		try{
 			br = new BufferedReader(new InputStreamReader(getClass().getResourceAsStream("/datafile/"+from+".csv")));
-				attributeLine = br.readLine();
-				dataTypeLine = br.readLine();
 		}
 		catch (Exception e) {
 			e.printStackTrace();
@@ -24,6 +23,18 @@ public class Table extends Operator{
 		}
 	}
 
+	private void init(){
+		try{
+			attributeLine = br.readLine();
+			dataTypeLine = br.readLine();
+			inited = true;
+		}
+		catch (Exception e) {
+			e.printStackTrace();
+			return;
+		}
+		return;
+	}
 	
 	/**
      * Create a new tuple and return the tuple to its parent.
@@ -32,6 +43,7 @@ public class Table extends Operator{
      */
 	@Override
 	public Tuple next(){
+		if(!inited) init();
 		String tupleLine;
 		try{
 			tupleLine = br.readLine();
